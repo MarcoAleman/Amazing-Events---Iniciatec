@@ -1,20 +1,3 @@
-/* html {
-    background-color: black;
-}
-
-h1{
-    color: white;
-} */
-
-
-/* body {
-    background-color: gray;
-}
-
-header {
-    width: 100vw;
-    background-color: white;
-} */
 @import url('https://fonts.googleapis.com/css2?family=Rancho&family=Saira+Stencil+One&display=swap');
 /* @import url('https://fonts.googleapis.com/css2?family=Rancho&family=Saira+Stencil+One&display=swap'); */
 *{
@@ -47,6 +30,8 @@ header {
     text-shadow: #FFF2F9 0.1em 0.1em 0.2em;
 }
 
+/* MOBILE FIRST */
+/* Header */
 header {
     height: 10vh;
 }
