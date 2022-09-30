@@ -85,10 +85,30 @@ const filterByCategory = (data) => {
     return result;
 }
 
-const allFilters = () =>{
+/* const allFilters = () =>{
     let resultByText = filterBySearch(inputSearch, allEvents);
     let resultByCategory = filterByCategory(resultByText);
     printCards(resultByCategory, cardContainer);
+} */
+//Probando aca si o si se debe imprimir antes los checkboxs
+const allFilters = (input, data) =>{
+    let resultByText = filterBySearch(input, data);
+    let resultByCategory = filterByCategory(resultByText);
+    printCards(resultByCategory, cardContainer);
+}
+
+const filtersOn = (searchElement, dataFilter) => {
+    let checks = document.querySelectorAll('.form-check-input');
+
+    searchElement.addEventListener('keyup', e => {
+        allFilters(searchElement, dataFilter)
+    })
+
+    checks.forEach((item) => {
+        item.addEventListener('input', e => {
+            allFilters(searchElement, dataFilter)
+        })
+    })
 }
 /* ------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------ */
@@ -104,17 +124,20 @@ let inputSearch = qs('.form-control');
 
 //Implemetacion
 switch(true){
-    case path.includes('index'):
-        //printCategories(allEvents, categoryContainer);
+    case path.includes('index') || path.endsWith('Amazing-Events-Iniciatec/'):
+        printCategories(allEvents, categoryContainer);
         printCards(allEvents, cardContainer);
+        filtersOn(inputSearch, allEvents);
         break;
     case path.includes('past'):
-        //printCategories(allEvents, categoryContainer);
+        printCategories(allEvents, categoryContainer);
         printCards(pastEvents, cardContainer);
+        filtersOn(inputSearch, pastEvents);
         break;
     case path.includes('upcoming'):
-        //printCategories(allEvents, categoryContainer);
+        printCategories(allEvents, categoryContainer);
         printCards(upEvents, cardContainer);
+        filtersOn(inputSearch, upEvents);
         break;
     case path.includes('contact'):
         break;
@@ -122,10 +145,10 @@ switch(true){
 }
 
 /* Filtrar Caregorias */
-if(categoryContainer != null){
+/* if(categoryContainer != null){
     printCategories(allEvents, categoryContainer);
-}
-let checks = document.querySelectorAll('.form-check-input');
+} */
+//let checks = document.querySelectorAll('.form-check-input');
 
 // Details
 let detailContainer = qs('#detail');
@@ -139,16 +162,4 @@ if(detailContainer){
 }
 
 /* ------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------- */
-//Agregando cosas
-inputSearch.addEventListener('keyup', e => {
-    allFilters()
-})
-
-checks.forEach((item, i) => {
-    item.addEventListener('input', e => {
-        allFilters()
-    })
-})
-//Aca como podria evitarme el foreach
-//checks.addEventListener('input', e => {})
+//ToDo: revisar codigo 
