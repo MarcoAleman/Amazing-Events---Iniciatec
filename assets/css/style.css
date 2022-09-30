@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Rancho&family=Saira+Stencil+One&display=swap');
-/* @import url('https://fonts.googleapis.com/css2?family=Rancho&family=Saira+Stencil+One&display=swap'); */
+
 *{
     font-family: 'Rancho', cursive;
 }
@@ -12,6 +12,9 @@
     --c5: #FFF2F9;
 }
 
+body {
+    min-height: 100vh;
+}
 .c3{
     color: var(--c3);
     border: 1px solid;
@@ -39,6 +42,7 @@ header {
 .navbar {
     z-index: 2;
 }
+
 header, .navbar,
 footer {
     background-color: var(--c4);
@@ -47,6 +51,9 @@ footer {
     height: 25vh;
 }
 
+main {
+    min-height: 50vh;
+}
 .form-control:focus {
     border-color: var(--c3);
     box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px var(--c2);
@@ -60,6 +67,10 @@ footer {
 .float-r {
     float: right;
 }
+
+footer {
+    min-height: 15vh;
+}
 footer .logos {
     width: 80%;
 }
@@ -71,5 +82,16 @@ footer .icon img{
 footer .tyc a, .copy p {
     text-decoration: none;
     color: black;
-    /* font-size: 1.25rem; */
+    font-size: 1.1rem;
+}
+
+
+@media (min-width: 768px){
+    nav {
+        height: 100%;
+    }
+
+    nav .nav-link{
+        font-size: 1.1em;
+    }
 }

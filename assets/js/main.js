@@ -7,20 +7,30 @@ function qs(element){
 //todo mensaje de error si el array esta vacio
 let printCards = (array, container)=>{
     container.innerHTML = '';
-    array.forEach((event, i)=>{
-        let card = document.createElement('div')
-        card.className = "card m-2"
-        card.style.width = '18rem'
-        card.innerHTML = `
-            <img src=${array[i].image} class="card-img-top" alt="...">
-            <div class="card-body  text-center">
-                <h5 class="card-title">${array[i].name}</h5>
-                <p class="card-text">${array[i].description}</p>
-                <a href="#" class="btn btn-outline-success">Buy</a>
-                <a href="detail.html?id=${array[i]._id}" class="btn c3">Details</a>
-            </div>`
-        container.appendChild(card);
-    })
+    if(array.length != 0){
+        array.forEach((event, i)=>{
+            let card = document.createElement('div')
+            card.className = "card m-2"
+            card.style.width = '18rem'
+            card.innerHTML = `
+                <img src=${array[i].image} class="card-img-top" alt="...">
+                <div class="card-body  text-center">
+                    <h5 class="card-title">${array[i].name}</h5>
+                    <p class="card-text">${array[i].description}</p>
+                    <a href="#" class="btn btn-outline-success">Buy</a>
+                    <a href="detail.html?id=${array[i]._id}" class="btn c3">Details</a>
+                </div>`
+            container.appendChild(card);
+        })
+    } else {
+        let error = document.createElement('div');
+        error.innerHTML = `
+        <h3 class = 'text-center' >Ups!... no results found</h3>
+            <img src='./assets/img/no-results.svg' class="card-img-top" alt="...">
+            
+        `
+        container.appendChild(error);
+    }
 }
 
 let printDetail = (event, container)=>{
@@ -36,6 +46,9 @@ let printDetail = (event, container)=>{
                     <h5 class="card-title">${event.name}</h5>
                     <p class="card-text">${event.description}</p>
                     <p>Date: ${event.date} <span class="float-r">Category: ${event.category}</span></p>
+                    <p>
+                        Capacity: ${event.capacity} <span class="float-r">
+                        ${event.assistance == undefined ? 'Estimate: ' + event.estimate : 'Assistance: ' + event.assistance}</span></p>
                     <p>Price: $${event.price} <span class="float-r">Place: ${event.place}</span></p>
                     <a href="#" class="btn btn-outline-success text-center">Buy</a>
                 </div>
