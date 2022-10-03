@@ -4,7 +4,7 @@
 function qs(element){
     return document.querySelector(element);
 }
-//todo mensaje de error si el array esta vacio
+
 let printCards = (array, container)=>{
     container.innerHTML = '';
     if(array.length != 0){
@@ -35,7 +35,7 @@ let printCards = (array, container)=>{
 
 let printDetail = (event, container)=>{
     let detail = document.createElement('div');
-    detail.className = 'card mb-3';
+    detail.className = 'card';
     detail.innerHTML = `
         <div class="row g-0">
             <div class="col-md-4 img-card">
@@ -98,12 +98,6 @@ const filterByCategory = (data) => {
     return result;
 }
 
-/* const allFilters = () =>{
-    let resultByText = filterBySearch(inputSearch, allEvents);
-    let resultByCategory = filterByCategory(resultByText);
-    printCards(resultByCategory, cardContainer);
-} */
-//Probando aca si o si se debe imprimir antes los checkboxs
 const allFilters = (input, data) =>{
     let resultByText = filterBySearch(input, data);
     let resultByCategory = filterByCategory(resultByText);
@@ -157,12 +151,6 @@ switch(true){
     case path.includes('detail'):
 }
 
-/* Filtrar Caregorias */
-/* if(categoryContainer != null){
-    printCategories(allEvents, categoryContainer);
-} */
-//let checks = document.querySelectorAll('.form-check-input');
-
 // Details
 let detailContainer = qs('#detail');
 let queryString = location.search;
@@ -175,4 +163,24 @@ if(detailContainer){
 }
 
 /* ------------------------------------------------------------------------------------------ */
-//ToDo: revisar codigo 
+let $contact = qs('#form-contact');
+
+$contact.addEventListener('submit', e => {
+    //aca poner un condicional en para comprobar los campos
+    e.preventDefault();
+    Swal.fire({
+        title: 'Message sent !',
+        text: 'Thank you for contacting us',
+        icon: 'success',
+        confirmButtonText: 'Continue'
+    })
+    /* Swal.fire({
+        title: 'Error!',
+        text: 'Fill in all the fields',
+        icon: 'error',
+        confirmButtonText: 'Continue'
+    }) */
+})
+
+/* ------------------------------------------------------------------------------------------ */
+//ToDo: el buscador no funciona con la x, hacer un preventD el el form del buscador, en eventos pasados evitar que se pueda comprar

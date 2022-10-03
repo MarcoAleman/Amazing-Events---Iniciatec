@@ -2,6 +2,7 @@
 
 *{
     font-family: 'Rancho', cursive;
+    /* margin: 0; */
 }
 
 :root {
@@ -15,6 +16,7 @@
 body {
     min-height: 100vh;
 }
+
 .c3{
     color: var(--c3);
     border: 1px solid;
@@ -36,7 +38,7 @@ body {
 /* MOBILE FIRST */
 /* Header */
 header {
-    height: 10vh;
+    height: 7vh;
 }
 
 .navbar {
@@ -47,13 +49,34 @@ header, .navbar,
 footer {
     background-color: var(--c4);
 }
+
+header .nav-link:hover{
+    color: var(--c2);
+    text-shadow: #FFF2F9 0.2em 0.2em 0.1em;
+}
+
 .carousel-item {
-    height: 25vh;
+    height: 20vh;
 }
 
 main {
-    min-height: 50vh;
+    min-height: 58vh;
 }
+
+main .central {
+    background-color: #fbbedf7e;
+    border-radius: 7px;
+}
+
+.form-check-input:checked {
+    background-color: var(--c3);
+    border-color: var(--c2);
+}
+
+form, .info-contact {
+    margin: 0 auto;
+}
+
 .form-control:focus {
     border-color: var(--c3);
     box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px var(--c2);
@@ -71,6 +94,7 @@ main {
 footer {
     min-height: 15vh;
 }
+
 footer .logos {
     width: 80%;
 }
@@ -85,6 +109,29 @@ footer .tyc a, .copy p {
     font-size: 1.1rem;
 }
 
+/* CONTACT */
+#form-contact {
+    padding: 10px 20px;
+}
+
+#form-contact .contact {
+    width: 100%;
+    background-color: var(--c3);
+    color: var(--c5);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 0;
+}
+
+#form-contact .contact:hover {
+    border-color: var(--c5);
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px var(--c3);
+
+}
+
+.info-contact iframe {
+    max-width: 80%;
+}
 
 @media (min-width: 768px){
     nav {
@@ -92,6 +139,15 @@ footer .tyc a, .copy p {
     }
 
     nav .nav-link{
-        font-size: 1.1em;
+        font-size: 1.2em;
     }
+
+    #form-contact, .info-contact {
+        width: 50%;
+    }
+}
+
+
+.here {
+    border: red 3px solid;
 }

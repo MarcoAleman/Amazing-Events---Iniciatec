@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="./assets/img/favicon.ico" type="image/x-icon">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
 
@@ -68,28 +70,38 @@
         </div>
     </div>
 
-    <main class="container bg-light p-3 mt-lg-3 mb-lg-3">
-    
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Name</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Your Name">
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlInput2" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleFormControlInput2" placeholder="name@example.com">
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Message</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
+    <main>
+        <div class="container p-3 mt-lg-3 mb-lg-2 central d-lg-flex">
+            <form action="#" id="form-contact">
+                <h1>Contact Us</h1>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Your Name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput2" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput2" placeholder="name@example.com" required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                </div>
+        
+                <button class="contact" type="submit" id="button-addon2">
+                    CONTACT US
+                </button>
+            </form>
 
-        <button class="btn c3" type="button" id="button-addon2">
-            SEND
-        </button>
+            <div class="info-contact d-flex flex-column justify-content-center align-items-center">
+                <h3>Our Office</h3>
+                <span>🚩 Calle Falsa 123, Springfield</span>
+                <h3>Tel:</h3>
+                <span>📞 <a href="tel:+5411433432">+54 114334323</a></span>
+
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26215.848386834576!2d-71.05488111715921!3d-34.781252398239566!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9664f2fb44cbee0f%3A0x15932fa6a7614f58!2sPeor%20es%20Nada%2C%20Chimbarongo%2C%20O&#39;Higgins%2C%20Chile!5e0!3m2!1ses-419!2sar!4v1664824487219!5m2!1ses-419!2sar" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
     </main>
-
-
-
 
     <footer class="p-2">
         <div class="container d-flex flex-column align-items-center">
