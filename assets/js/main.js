@@ -119,18 +119,17 @@ const filtersOn = (searchElement, dataFilter) => {
 }
 /* ------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------ */
-let allEvents = data.events;
-let currentDate = data.currentDate;
-let pastEvents = allEvents.filter(e => e.date < currentDate);
-let upEvents = allEvents.filter(e => e.date > currentDate);
+let allEvents;
 let path = location.pathname;
 let cardContainer = qs('.collection-cards');
 let categoryContainer = qs('.conteiner-checkbox');
 let inputSearch = qs('.form-control');
+const URI = 'https://amazing-events.herokuapp.com/api/events';
 
+getData(URI, path)
 
 //Implemetacion
-switch(true){
+/* switch(true){
     case path.includes('index') || path.endsWith('Amazing-Events-Iniciatec/'):
         printCategories(allEvents, categoryContainer);
         printCards(allEvents, cardContainer);
@@ -150,7 +149,7 @@ switch(true){
         break;
     case path.includes('detail'):
 }
-
+ */
 // Details
 let detailContainer = qs('#detail');
 let queryString = location.search;
@@ -163,24 +162,52 @@ if(detailContainer){
 }
 
 /* ------------------------------------------------------------------------------------------ */
-let $contact = qs('#form-contact');
+const CONTACT = qs('#form-contact');
 
-$contact.addEventListener('submit', e => {
-    //aca poner un condicional en para comprobar los campos
-    e.preventDefault();
-    Swal.fire({
-        title: 'Message sent !',
-        text: 'Thank you for contacting us',
-        icon: 'success',
-        confirmButtonText: 'Continue'
+if(CONTACT != null) {
+    CONTACT.addEventListener('submit', e => {
+        //aca poner un condicional en para comprobar los campos
+        e.preventDefault();
+        Swal.fire({
+            title: 'Message sent !',
+            text: 'Thank you for contacting us',
+            icon: 'success',
+            confirmButtonText: 'Continue'
+        })
+        /* Swal.fire({
+            title: 'Error!',
+            text: 'Fill in all the fields',
+            icon: 'error',
+            confirmButtonText: 'Continue'
+        }) */
     })
-    /* Swal.fire({
-        title: 'Error!',
-        text: 'Fill in all the fields',
-        icon: 'error',
-        confirmButtonText: 'Continue'
-    }) */
-})
+}
+
+/* ------------------------------------------------------------------------------------------ */
+//const URI = 'https://amazing-events.herokuapp.com/api/events';
+
+
+function getData(url, path) {
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            switch(true){
+                case path.includes('past'):
+                    allEvents = data.events.filter(e => e.date < data.currentDate);
+                    break;
+                case path.includes('upcoming'):
+                    allEvents = data.events.filter(e => e.date > data.currentDate);
+                    break;
+                default:
+                    allEvents = data.events;
+            }
+            printCategories(allEvents, categoryContainer);
+            printCards(allEvents, cardContainer);
+            filtersOn(inputSearch, allEvents);
+        })
+        .catch('error')
+}
+
 
 /* ------------------------------------------------------------------------------------------ */
 //ToDo: el buscador no funciona con la x, hacer un preventD el el form del buscador, en eventos pasados evitar que se pueda comprar
