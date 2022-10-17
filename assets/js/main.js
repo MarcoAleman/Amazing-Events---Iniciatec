@@ -117,6 +117,15 @@ const filtersOn = (searchElement, dataFilter) => {
         })
     })
 }
+
+const getDetail = (url, id, container) => {
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let eventDetail = data.events.find(event => event._id == id);
+            printDetail(eventDetail, container)
+        })
+}
 /* ------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------ */
 let allEvents;
@@ -126,45 +135,34 @@ let categoryContainer = qs('.conteiner-checkbox');
 let inputSearch = qs('.form-control');
 const URI = 'https://amazing-events.herokuapp.com/api/events';
 
-getData(URI, path)
+//getData(URI, path)
 
 //Implemetacion
-/* switch(true){
-    case path.includes('index') || path.endsWith('Amazing-Events-Iniciatec/'):
-        printCategories(allEvents, categoryContainer);
-        printCards(allEvents, cardContainer);
-        filtersOn(inputSearch, allEvents);
-        break;
-    case path.includes('past'):
-        printCategories(allEvents, categoryContainer);
-        printCards(pastEvents, cardContainer);
-        filtersOn(inputSearch, pastEvents);
-        break;
-    case path.includes('upcoming'):
-        printCategories(allEvents, categoryContainer);
-        printCards(upEvents, cardContainer);
-        filtersOn(inputSearch, upEvents);
-        break;
+switch(true){
     case path.includes('contact'):
+        getStats(URI)
+        break;
+    case path.includes('stats'):
+        getStats(URI)
         break;
     case path.includes('detail'):
-}
- */
-// Details
-let detailContainer = qs('#detail');
-let queryString = location.search;
-let params = new URLSearchParams(queryString);
-let id = params.get('id');
+        let detailContainer = qs('#detail');
+        let queryString = location.search;
+        let params = new URLSearchParams(queryString);
+        let id = params.get('id');
 
-if(detailContainer){
-    let eventDetail = allEvents.find(event => event._id == id);
-    printDetail(eventDetail, detailContainer)
+        getDetail(URI, id, detailContainer)
+        break;
+    default:
+        getData(URI, path)
+
 }
+
 
 /* ------------------------------------------------------------------------------------------ */
 const CONTACT = qs('#form-contact');
 
-if(CONTACT != null) {
+if(CONTACT) {
     CONTACT.addEventListener('submit', e => {
         //aca poner un condicional en para comprobar los campos
         e.preventDefault();
@@ -184,8 +182,6 @@ if(CONTACT != null) {
 }
 
 /* ------------------------------------------------------------------------------------------ */
-//const URI = 'https://amazing-events.herokuapp.com/api/events';
-
 
 function getData(url, path) {
     fetch(url)
@@ -210,4 +206,112 @@ function getData(url, path) {
 
 
 /* ------------------------------------------------------------------------------------------ */
+
+function getStats(url, container) {
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let stats = [];
+            let allEvents = data.events;
+            let pastEvents = allEvents.filter(e => e.date < data.currentDate);
+            let upEvents = allEvents.filter(e => e.date > data.currentDate);
+            allEvents.sort((a, b) => a.capacity - b.capacity);
+            pastEvents.sort((a, b) => (a.assistance / a.capacity) - (b.assistance / b.capacity));
+
+            stats.push(pastEvents[0]); //low assistance
+            stats.push(pastEvents[29]); //hight assistance
+            stats.push(allEvents[49]); //hight capacity
+            console.table(stats)
+
+            let pastCat = allCategories(pastEvents);
+            let upCat = allCategories(upEvents);
+            //console.table(pastCat)
+            //console.table(upCat)
+            let pastStats = getAllStats(pastEvents, pastCat);
+            let upStats = getAllStats(upEvents, upCat);
+
+
+            const tableGeneral = qs('#table1');
+            const tableUp = qs('#table2');
+            const tablePast = qs('#table3');
+            printGeneralStatic(stats, tableGeneral)
+            printTableRow(upStats, tableUp);
+            printTableRow(pastStats, tablePast);
+
+
+        })
+}
+/* ------------------------------------------------------------------------------------------ */
 //ToDo: el buscador no funciona con la x, hacer un preventD el el form del buscador, en eventos pasados evitar que se pueda comprar
+
+const getAllStats = (data, categories) => {
+    let result = [];
+
+    categories.forEach(category => {
+        let cat = {
+            name : category,
+            revenue : 0,
+            percent : 0,
+            events: 0
+        }
+
+        data.forEach(event => {
+            if(event.category == category) {
+                cat.revenue = cat.revenue + (event.price * (event.assistance ?? event.estimate))
+                cat.percent = cat.percent + ((event.assistance ?? event.estimate) / event.capacity) * 100
+                cat.events = cat.events + 1
+            }
+        })
+        cat.percent = (cat.percent / cat.events).toFixed(2);
+        result.push(cat);
+    })
+    return result;
+}
+
+
+const printTableRow = (data, container) => {
+    container.innerHTML = '';
+    if(data.length != 0){
+        data.forEach((event, i)=>{
+            let row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${data[i].name}</td>
+                <td>${data[i].revenue}</td>
+                <td>${data[i].percent}</td>
+            `
+            container.appendChild(row);
+        })
+    } else {
+        let error = document.createElement('div');
+        error.innerHTML = `
+        <h3 class = 'text-center' >Ups!... no results found</h3>
+            <img src='./assets/img/no-results.svg' class="card-img-top" alt="...">
+            
+        `
+        container.appendChild(error);
+    }
+}
+
+const printGeneralStatic = (data, container) => {
+    container.innerHTML = '';
+    if(data.length != 0){
+
+
+
+        data.forEach((event, i)=>{
+            let cell = document.createElement('td');
+            cell.innerHTML = `
+                <a href="detail.html?id=${data[i]._id}">${data[i].name}</a>
+            `
+            container.appendChild(cell);
+        })
+    } else {
+        let error = document.createElement('div');
+        error.innerHTML = `
+        <h3 class = 'text-center' >Ups!... no results found</h3>
+            <img src='./assets/img/no-results.svg' class="card-img-top" alt="...">
+            
+        `
+        container.appendChild(error);
+    }
+}
